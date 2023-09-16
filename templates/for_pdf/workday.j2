@@ -8,6 +8,6 @@
 <p><b>Нет сохранённых посещений в этот день.</b></p>
 {% endfor %}
 </div>
-<p><b><u><i>Время между клиентами</i></u></b>: {{ workday.idle_time }} минут ({{ workday.get_idle_time_pay() }} рублей).</p>
+<p><b><u><i>Время</i></u></b>: {{ workday.idle_time }} минут ({{ workday.get_idle_time_pay() }} рублей).</p>
 
-<p><b><u><i>Итого за рабочий день</i></u></b>: {{ workday.get_total() }}</p>
+<p><b><u><i>Итого за рабочий день</i></u></b>: {{ workday.get_total() }} рублей.</p>

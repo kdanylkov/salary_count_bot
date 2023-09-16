@@ -2,7 +2,7 @@
 
 Краткий отчет по дням:
 {% for w in period.workdays %}
-({{ w.date_str() }}) Клиентов за день: {{ w.get_number_of_visits() }}. Время между клиентами: {{ w.idle_time }}. Заработано за день: {{ w.get_total() }}.
+({{ w.date_str() }}) Клиентов за день: {{ w.get_number_of_visits() }}. Время: {{ w.idle_time }}. Заработано за день: {{ w.get_total() }}.
 ----------------------
 {% endfor %}
 <b>Общий заработок</b>: {{ period.get_period_total() }}

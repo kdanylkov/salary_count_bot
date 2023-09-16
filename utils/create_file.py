@@ -13,10 +13,6 @@ def send_report(period: PeriodReport, bot, id):
         HTML(string=html).write_pdf(f)
 
     with open(filename, "rb") as f:
-        print(f.__dict__)
-        print(dir(f))
-        print(f.name)
-        print(type(f))
         bot.send_document(id, f)
 
     file = Path(f"./{filename}")
