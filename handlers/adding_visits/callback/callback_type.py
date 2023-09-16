@@ -1,0 +1,55 @@
+from loader import bot
+from data.types import TreatemtTypes, TYPES_LIST
+from loader import states
+from keyboards.inline.first_proc import if_first
+
+from telebot.types import CallbackQuery, Message
+
+
+@bot.callback_query_handler(func=lambda c: c.data in TYPES_LIST)
+def type_callback(call: CallbackQuery):
+    mes = call.message
+
+    try:
+        type_chosen = TreatemtTypes[call.data]
+    except KeyError as err:
+        warning_text = "Что-то пошло не так... Обратись в службу поддержки!"
+        bot.send_message(mes.chat.id, warning_text)
+
+        print(
+            "Critical Error! Callback data from type choice \
+                doesn't correspond to any treatment type!"
+        )
+        print(f"Error message: {err}")
+    else:
+        bot.send_message(mes.chat.id, f"Ты выбрала: {type_chosen.value}")
+        bot.add_data(mes.chat.id, type=type_chosen.name)
+
+        _proceed_to_next_step_from_type(type_chosen, call.message.chat.id)
+    finally:
+        bot.delete_message(mes.chat.id, call.message.message_id)
+
+
+@bot.message_handler(state=states.choose_type, content_types=["text"])
+def type_choice_keyboard_input(message: Message):
+    text = "Нужно нажать одну из кнопок!⬆️"
+    bot.send_message(message.chat.id, text=text)
+
+
+def _proceed_to_next_step_from_type(type: TreatemtTypes, id: str | int):
+    state = None
+    match type.name:
+        case "CLASSIC_COSMETOLOGY" | "COSMETICS":
+            state = states.choose_gross
+            bot.send_message(id, "Сколько заплатил клиент?")
+        case "ROLLER_MASSAGE" | "APPARATUS_COSMETOLOGY":
+            state = states.if_first
+            bot.send_message(id, "Это первая процедура?", reply_markup=if_first())
+        case "INJECTIONS":
+            state = states.prime_cost
+            bot.send_message(id, "Введи себестоимость материалов")
+        case "LASER":
+            state = states.duration
+            bot.send_message(id, "Введи длительность процедуры в минутах")
+
+    bot.set_state(id, state)

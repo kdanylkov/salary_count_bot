@@ -1,0 +1,6 @@
+<u><b>Имя клиента</b></u>: {{ visit.client_name }}
+<u><b>Процедуры</b></u>:
+    {% for p in visit.procedures -%}
+    {{ loop.index }}) {{ p.report() }}
+    {% endfor -%}
+<u><b>Общий доход с посещения</b></u>: {{ total }}

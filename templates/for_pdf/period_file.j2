@@ -1,0 +1,13 @@
+<h1>Отчет за период: {{ period.get_period_str() }} (Мастер {{ period.master }})</h1>
+
+<h2>Детализация:</h2>
+
+<ul>
+{% for w in period.workdays %}
+<li>=============={{ w.date_str() }}======================
+{{ w.workday_report(pdf=True) }}</li>
+</br>
+{% endfor %}
+</ul>
+
+<h2><u>Общий заработок: {{ period.get_period_total() }}</u></h2>

@@ -1,0 +1,8 @@
+<h3>Имя клиента: {{ visit.client_name }}</h3>
+<b><u>Процедуры:</u></b>
+    <ol>
+    {% for p in visit.procedures -%}
+    <li>{{ p.report(pdf=True) }}</li>
+    {% endfor -%}
+    </ol>
+<u><b>Общий доход с посещения</b></u>: {{ total }}

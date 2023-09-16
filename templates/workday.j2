@@ -1,0 +1,8 @@
+{% for v in workday.visits %}
+{{ v.visit_report() }}
+{% else %}
+Нет сохранённых посещений в этот день.
+{% endfor %}
+<b>Время между клиентами</b>: {{ workday.idle_time }} минут ({{ workday.get_idle_time_pay() }} рублей).
+
+<b>Итого за рабочий день</b>: {{ workday.get_total() }}
