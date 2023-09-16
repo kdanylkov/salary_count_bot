@@ -5,7 +5,6 @@ __all__ = [
     "gross",
     "manual_input",
     "prime_cost",
-    "proc_duration",
     "sub_gross",
 ]
 from . import (
@@ -15,6 +14,5 @@ from . import (
     gross,
     manual_input,
     prime_cost,
-    proc_duration,
     sub_gross,
 )

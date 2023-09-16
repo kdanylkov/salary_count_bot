@@ -13,7 +13,6 @@ class AddVisitStates(StatesGroup):
     prime_cost = State()
     if_subscr_laser = State()
     if_add_subscr = State()
-    duration = State()
     manual_input = State()
     if_one_more_visit = State()
     sub_gross = State()

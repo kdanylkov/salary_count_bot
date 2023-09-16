@@ -2,6 +2,7 @@ from loader import bot
 from data.types import TreatemtTypes, TYPES_LIST
 from loader import states
 from keyboards.inline.first_proc import if_first
+from keyboards.inline.subcr_laser import if_subscr_laser
 
 from telebot.types import CallbackQuery, Message
 
@@ -44,12 +45,18 @@ def _proceed_to_next_step_from_type(type: TreatemtTypes, id: str | int):
             bot.send_message(id, "Сколько заплатил клиент?")
         case "ROLLER_MASSAGE" | "APPARATUS_COSMETOLOGY":
             state = states.if_first
-            bot.send_message(id, "Это первая процедура?", reply_markup=if_first())
+            bot.send_message(id, "Это первая процедура?",
+                             reply_markup=if_first())
         case "INJECTIONS":
             state = states.prime_cost
             bot.send_message(id, "Введи себестоимость материалов")
         case "LASER":
-            state = states.duration
-            bot.send_message(id, "Введи длительность процедуры в минутах")
+            bot.set_state(id, states.if_subscr_laser)
+
+            bot.send_message(
+                id,
+                "Выбери вид посещения (либо введи вручную свой доход)",
+                reply_markup=if_subscr_laser(),
+            )
 
     bot.set_state(id, state)

@@ -70,28 +70,16 @@ class Laser(BaseCosmet):
     def __init__(
         self,
         type: str,
-        duration: int,
         gross: Optional[int] = None,
         manual_input: bool = False,
         manual_value: int = 0,
     ):
         self.subscriptions: List[LaserSubscription] = []
-        self.duration = duration
         self.manual_input = manual_input
         self.manual_value = manual_value
         super().__init__(gross, type)
 
-    def _add_per_hour_pay(func):
-        def wrapper(self):
-            per_hour_pay = int(self.per_hour * (self.duration / 60))
-            earning = func(self)
-            total_earing = per_hour_pay + earning
-            return total_earing
-
-        return wrapper
-
     @property
-    @_add_per_hour_pay
     def earning(self) -> int:
         if self.gross:
             return super().earning

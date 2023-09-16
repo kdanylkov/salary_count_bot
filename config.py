@@ -30,7 +30,6 @@ PROCEDURE_PARAMS = [
     "first",
     "sub_visits",
     "prime_cost",
-    "duration",
     "manual_input",
     "manual_value",
 ]

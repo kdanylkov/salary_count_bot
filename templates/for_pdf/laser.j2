@@ -5,4 +5,4 @@
     {%- endfor -%}
     </ul>
 {% endmacro -%}
-<b>{{ p.name }}</b>. Длительность (в минутах): {{ p.duration }}.{% if not p.manual_input %}{% if p.gross %}Разовое посещение. Стоимость: {{ p.gross }}{% else %} Абонимент(ы): {{ build_list_of_subs(p.subscriptions) }}{% endif %}{% else %} Сумма заработка введена вручную ({{ p.manual_value }}).{% endif %} Заработок: {{ p.earning }}
+<b>{{ p.name }}</b>. {% if not p.manual_input %}{% if p.gross %}Разовое посещение. Стоимость: {{ p.gross }}{% else %} Абонимент(ы): {{ build_list_of_subs(p.subscriptions) }}{% endif %}{% else %} Сумма заработка введена вручную ({{ p.manual_value }}).{% endif %} Заработок: {{ p.earning }}
