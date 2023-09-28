@@ -171,7 +171,8 @@ class Visit:
         return sum
 
     def to_dict(self) -> dict:
-        data = {"date": self.date, "client_name": self.client_name, "procedures": []}
+        data = {"date": self.date,
+                "client_name": self.client_name, "procedures": []}
 
         for proc in self.procedures:
             dict_proc = proc.to_dict()
@@ -216,7 +217,8 @@ class Workday:
         if value is None:
             self._visits = []
         else:
-            self._visits = [self._create_visit_from_db_model(val) for val in value]
+            self._visits = [
+                self._create_visit_from_db_model(val) for val in value]
 
     def _create_visit_from_db_model(self, visit: VisitModel):
         data = visit.as_dict()
@@ -250,6 +252,13 @@ class Workday:
 
     def date_str(self) -> str:
         return self.date.strftime("%d/%m/%Y")
+
+    def delete_visit(self, id: int | str) -> bool:
+        for v in self.visits:  # type: Visit
+            if id == v.db_id:
+                self.visits.remove(v)
+                return True
+        return False
 
 
 class PeriodReport:

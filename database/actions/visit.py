@@ -34,7 +34,7 @@ def create_visit_with_procedures(data: dict, user_id, date: datetime):
         session.add(visit)
 
 
-def delete_visit(id: int) -> bool:
+def delete_visit_from_db(id: int) -> bool:
     with Session() as session:
         try:
             visit = session.get(VisitModel, id)

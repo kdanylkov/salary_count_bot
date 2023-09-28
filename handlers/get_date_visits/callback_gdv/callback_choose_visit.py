@@ -1,5 +1,5 @@
 from loader import bot, show_date_states
-from keyboards.inline.if_delete_visit import if_delete_visit
+from keyboards.inline.change_delete_visit import if_delete_visit
 from data.objects import Workday
 
 from telebot.types import CallbackQuery
