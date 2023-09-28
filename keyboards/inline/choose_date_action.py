@@ -5,7 +5,7 @@ from telebot.types import InlineKeyboardButton
 def choose_action(visits):
     markup = quick_markup(
         {
-            "Изменить время между клиентами": {"callback_data": "action:idle_time"},
+            "Время": {"callback_data": "action:idle_time"},
             "Добавить посещение": {"callback_data": "action:add_another"},
         },
         row_width=1,

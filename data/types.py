@@ -5,7 +5,7 @@ class TreatemtTypes(Enum):
     CLASSIC_COSMETOLOGY = "Классическая косметология"
     APPARATUS_COSMETOLOGY = "Аппаратная косметология"
     LASER = "Лазер"
-    COSMETICS = "Косметика"
+    COSMETICS = "Косметика/Украшения"
     ROLLER_MASSAGE = "Роликовый массаж"
     INJECTIONS = "Инъекцонные процедуры"
 

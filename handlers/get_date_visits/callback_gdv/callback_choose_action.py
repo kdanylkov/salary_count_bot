@@ -15,7 +15,7 @@ def callback_choose_action(call: CallbackQuery):
 
     if call.data.endswith("idle_time"):
         bot.send_message(
-            id, "Введи новое значение времени между процедурами (в минутах):"
+            id, "Введи новое значение времени (в минутах):"
         )
         bot.set_state(id, show_date_states.idle_hours)
     elif call.data.endswith("delete"):
