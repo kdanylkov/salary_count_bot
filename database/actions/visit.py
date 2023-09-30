@@ -1,7 +1,6 @@
 from database.actions.workday import get_or_create_workday
 from database.models import VisitModel
-from database.models import SubscriptionModel
-from database.models import ProcedureModel
+from database.actions.procedures import get_procedure_for_db
 from loader import Session
 
 from datetime import datetime
@@ -18,17 +17,7 @@ def create_visit_with_procedures(data: dict, user_id, date: datetime):
 
         procedures = data["procedures"]
         for entry in procedures:  # type: dict
-            subs = entry.get("subscriptions")
-
-            if subs:
-                subs = entry.pop("subscriptions")
-                proc = ProcedureModel(**entry)
-                for sub in subs:
-                    subscription = SubscriptionModel(**sub)
-                    proc.subscriptions.append(subscription)
-            else:
-                proc = ProcedureModel(**entry)
-
+            proc = get_procedure_for_db(entry)
             visit.procedures.append(proc)
 
         session.add(visit)

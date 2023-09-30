@@ -5,6 +5,7 @@ from data.objects import Visit, Workday
 from utils.visit import delete_visit
 from utils.procedures import delete_procedure
 from keyboards.inline.choose_date_action import choose_action
+from keyboards.inline.treatment_types import types_keyboard
 
 from telebot.types import CallbackQuery
 from re import search
@@ -21,7 +22,7 @@ def callback_choose_proc(call: CallbackQuery):
         raise UnknownCallbackError(call.data)
     proc_id = int(res.group(0))
 
-    visit: Visit = bot.retrieve_data(id).data['workday_visit']
+    visit: Visit = bot.retrieve_data(id).data['visit']
 
     if suffix == 'del':
         if len(visit.procedures) == 1:
@@ -38,13 +39,22 @@ def callback_choose_proc(call: CallbackQuery):
                         id)
         else:
             try:
-                delete_procedure(bot, id, proc_id)
+                delete_procedure(id, proc_id)
             except ProcedureNotDeleted:
                 bot.send_message(
                     id, 'Произошла ошибка. Сообщи в службу поддержки.')
                 raise
             else:
                 _send_message_after_deletion("Процедура успешено удалена.", id)
+
+    elif suffix == 'chg':
+        proc_to_delete = visit.procedures.get_by_id(proc_id)
+
+        bot.add_data(id, edit_visit=True, for_deletion=proc_to_delete)
+        bot.set_state(id, states.choose_type)
+
+        bot.send_message(id, 'Выбери тип процедуры',
+                         reply_markup=types_keyboard())
 
 
 def _send_message_after_deletion(message: str, chat_id) -> None:

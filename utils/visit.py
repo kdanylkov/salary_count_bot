@@ -4,7 +4,7 @@ from exceptions.objects import VisitNotDeleted
 
 
 def delete_visit(bot, id: str | int) -> None:
-    visit = bot.retrieve_data(id).data["workday_visit"]
+    visit = bot.retrieve_data(id).data["visit"]
     workday: Workday = bot.retrieve_data(id).data['workday']
 
     deleted_from_db = delete_visit_from_db(visit.db_id)

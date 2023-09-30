@@ -25,7 +25,7 @@ def callback_choose_visit(call: CallbackQuery):
             bot.send_message(id, "Произошла ошибка. Обратитесь в службу поддержки")
             bot.delete_state(id)
         else:
-            bot.add_data(id, workday_visit=visit)
+            bot.add_data(id, visit=visit)
             bot.send_message(id, visit.visit_report(),
                              reply_markup=edit_visit())
 

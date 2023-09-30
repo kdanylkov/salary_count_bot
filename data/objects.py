@@ -172,6 +172,11 @@ class ProceduresManager(list):
                 info[param] = data[param]
         return info
 
+    def get_by_id(self, proc_id: int):
+        for p in self:
+            if p.db_id == proc_id:
+                return p
+
 
 class Visit:
     def __init__(self, date: datetime, client_name: str, db_id: int | None = None):
@@ -287,6 +292,12 @@ class Workday:
         for i, v in enumerate(self.visits):
             if v.db_id == visit.db_id:
                 self.visits[i] = visit
+        return self
+
+    def get_visit_by_id(self, visit_id):
+        for v in self.visits:
+            if v.db_id == visit_id:
+                return v
 
 
 class PeriodReport:
