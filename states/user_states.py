@@ -24,7 +24,8 @@ class ShowDateStates(StatesGroup):
     choose_action = State()
     choose_visit = State()
     confirm_delete = State()
-    if_delete_visit = State()
+    if_change_delete_visit = State()
+    choose_proc = State()
 
 
 class PeriodReportStates(StatesGroup):

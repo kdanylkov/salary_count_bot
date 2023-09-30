@@ -13,7 +13,7 @@ def choose_action(visits):
 
     if visits:
         btn = InlineKeyboardButton(
-            text="Изменить/Удалить посещение", callback_data="action:delete"
+            text="Изменить/Удалить посещение", callback_data="action:ch_or_del"
         )
         markup.add(btn)
     markup.add(

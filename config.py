@@ -24,6 +24,7 @@ COMMANDS = (
 TIMEZONE = timezone("Europe/Moscow")
 
 PROCEDURE_PARAMS = [
+    "id",
     "type",
     "gross",
     "sub",

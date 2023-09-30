@@ -24,7 +24,9 @@ def add_another(call: CallbackQuery):
                 visit: Visit = data["visit"]
                 date = data["date"]
 
+                print(data['workday'].workday_report())
                 create_visit_with_procedures(visit.to_dict(), int(id), date)
+                print(data['workday'].workday_report())
 
             report = visit.visit_report()
             bot.send_message(id, report, reply_markup=one_more_visit())

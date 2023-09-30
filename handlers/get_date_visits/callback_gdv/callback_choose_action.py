@@ -18,7 +18,7 @@ def callback_choose_action(call: CallbackQuery):
             id, "Введи новое значение времени (в минутах):"
         )
         bot.set_state(id, show_date_states.idle_hours)
-    elif call.data.endswith("delete"):
+    elif call.data.endswith("ch_or_del"):
         text = "Выбери посещение"
         workday = bot.retrieve_data(id).data["workday"]
         bot.send_message(id, text, reply_markup=choose_visit(workday))

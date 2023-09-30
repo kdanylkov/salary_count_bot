@@ -1,5 +1,5 @@
 from loader import bot, show_date_states
-from keyboards.inline.change_delete_visit import if_delete_visit
+from keyboards.inline.change_delete_visit import edit_visit
 from data.objects import Workday
 
 from telebot.types import CallbackQuery
@@ -26,9 +26,10 @@ def callback_choose_visit(call: CallbackQuery):
             bot.delete_state(id)
         else:
             bot.add_data(id, workday_visit=visit)
-            bot.send_message(id, visit.visit_report(), reply_markup=if_delete_visit())
+            bot.send_message(id, visit.visit_report(),
+                             reply_markup=edit_visit())
 
-            bot.set_state(id, state=show_date_states.if_delete_visit)
+            bot.set_state(id, state=show_date_states.if_change_delete_visit)
 
 
 @bot.message_handler(state=show_date_states.choose_visit, content_types=["text"])

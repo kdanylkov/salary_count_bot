@@ -1,6 +1,6 @@
 from datetime import datetime
 from abc import ABC
-from typing import List, Optional
+from typing import List
 
 from exceptions.objects import NotLaserProcedure
 from config import PROCEDURE_PARAMS
@@ -10,11 +10,12 @@ from database.models import VisitModel
 
 
 class BaseCosmet(ABC):
-    _excluded_keys = ["percent", "subscriptions"]
+    _excluded_keys = ["percent", "subscriptions", "db_id"]
 
-    def __init__(self, gross: Optional[int], type: str):
+    def __init__(self, gross: int | None, type: str, id: int | None = None):
         self.gross = gross
         self.type = type
+        self.db_id = id
 
     @property
     def earning(self) -> int:
@@ -65,19 +66,19 @@ class LaserSubscription:
 
 class Laser(BaseCosmet):
     percent = 0.1
-    per_hour = 150
 
     def __init__(
         self,
         type: str,
-        gross: Optional[int] = None,
+        gross: int | None = None,
+        id: int | None = None,
         manual_input: bool = False,
         manual_value: int = 0,
-    ):
+    ) -> None:
         self.subscriptions: List[LaserSubscription] = []
         self.manual_input = manual_input
         self.manual_value = manual_value
-        super().__init__(gross, type)
+        super().__init__(gross, type, id)
 
     @property
     def earning(self) -> int:
@@ -85,15 +86,22 @@ class Laser(BaseCosmet):
             return super().earning
         elif self.manual_input:
             return self.manual_value
-        return int(sum([sub.visit_gross * self.percent for sub in self.subscriptions]))
+        return int(sum([sub.visit_gross * self.percent
+                        for sub in self.subscriptions]))
 
 
 class Injections(BaseCosmet):
     percent = 0.5
 
-    def __init__(self, gross: int, type: str, prime_cost: int):
+    def __init__(
+        self,
+        gross: int,
+        type: str,
+        prime_cost: int,
+        id: int | None = None
+    ) -> None:
         self.prime_cost = prime_cost
-        super().__init__(gross, type)
+        super().__init__(gross, type, id)
 
     @property
     def earning(self):
@@ -101,12 +109,20 @@ class Injections(BaseCosmet):
 
 
 class RollerMassage(BaseCosmet):
-    def __init__(self, gross, type, sub=False, first=False, sub_visits=None):
+    def __init__(
+        self,
+        gross: int,
+        type: str,
+        sub: bool = False,
+        first: bool = False,
+        sub_visits=None,
+        id: int | None = None
+    ) -> None:
         self.sub_visits = sub_visits
         self.sub = sub
         self.first = first
         self.percent = 0.2 if first else 0.3
-        super().__init__(gross, type)
+        super().__init__(gross, type, id)
 
     @property
     def earning(self):
@@ -193,6 +209,13 @@ class Visit:
 
         return msg
 
+    def delete_procedure(self, proc_id: int) -> bool:
+        for p in self.procedures:
+            if proc_id == p.db_id:
+                self.procedures.remove(p)
+                return True
+        return False
+
 
 Minutes = int
 
@@ -217,8 +240,8 @@ class Workday:
         if value is None:
             self._visits = []
         else:
-            self._visits = [
-                self._create_visit_from_db_model(val) for val in value]
+            self._visits = [self._create_visit_from_db_model(val)
+                            for val in value]
 
     def _create_visit_from_db_model(self, visit: VisitModel):
         data = visit.as_dict()
@@ -253,12 +276,17 @@ class Workday:
     def date_str(self) -> str:
         return self.date.strftime("%d/%m/%Y")
 
-    def delete_visit(self, id: int | str) -> bool:
+    def delete_visit(self, id) -> bool:
         for v in self.visits:  # type: Visit
             if id == v.db_id:
                 self.visits.remove(v)
                 return True
         return False
+
+    def update_visit(self, visit: Visit):
+        for i, v in enumerate(self.visits):
+            if v.db_id == visit.db_id:
+                self.visits[i] = visit
 
 
 class PeriodReport:
