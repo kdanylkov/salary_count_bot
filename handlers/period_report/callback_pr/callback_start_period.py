@@ -26,7 +26,7 @@ def date_chosen(call: CallbackQuery):
         bot.send_message(id, text, reply_markup=ReplyKeyboardRemove())
         bot.delete_state(id)
 
-    else:
+    elif action == "DAY":
         date = date
         now = datetime.now()
         if date > now:
@@ -36,17 +36,16 @@ def date_chosen(call: CallbackQuery):
                 id, text, reply_markup=get_calendar(now, calendar_3_callback)
             )
         else:
-            if action == "DAY":
-                text = f'Ты выбрала дату: {date.strftime("%d.%m.%Y")}'
-                bot.send_message(id, text)
-                bot.set_state(id, period_states.get_end_date)
+            text = f'Ты выбрала дату: {date.strftime("%d.%m.%Y")}'
+            bot.send_message(id, text)
+            bot.set_state(id, period_states.get_end_date)
 
-                bot.add_data(id, start_date=date)
+            bot.add_data(id, start_date=date)
 
-                text = "Введи конечную дату:"
-                bot.send_message(
-                    id, text=text, reply_markup=get_calendar(now, calendar_4_callback)
-                )
+            text = "Введи конечную дату:"
+            bot.send_message(
+                id, text=text, reply_markup=get_calendar(now, calendar_4_callback)
+            )
 
 
 @bot.message_handler(state=period_states.get_start_date, content_types=["text"])

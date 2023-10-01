@@ -23,7 +23,7 @@ def show_date_visits_calendar(call: CallbackQuery):
         bot.send_message(id, text, reply_markup=ReplyKeyboardRemove())
         bot.delete_state(id)
 
-    else:
+    elif action == "DAY":
         date = date
         now = datetime.now()
         if date > now:
@@ -33,17 +33,16 @@ def show_date_visits_calendar(call: CallbackQuery):
                 id, text, reply_markup=get_calendar(now, calendar_2_callback)
             )
         else:
-            if action == "DAY":
-                text = f'Ты выбрала дату: {date.strftime("%d.%m.%Y")}'
+            text = f'Ты выбрала дату: {date.strftime("%d.%m.%Y")}'
 
-                bot.send_message(id, text)
-                workday: Workday = get_workday_with_visits_from_db(id, date)
+            bot.send_message(id, text)
+            workday: Workday = get_workday_with_visits_from_db(id, date)
 
-                bot.set_state(id, show_date_states.choose_action)
-                text = workday.workday_report()
+            bot.set_state(id, show_date_states.choose_action)
+            text = workday.workday_report()
 
-                bot.add_data(id, workday=workday, date=date)
-                bot.send_message(id, text, reply_markup=(choose_action(workday.visits)))
+            bot.add_data(id, workday=workday, date=date)
+            bot.send_message(id, text, reply_markup=(choose_action(workday.visits)))
 
 
 @bot.message_handler(state=show_date_states.choose_date, content_types=["text"])

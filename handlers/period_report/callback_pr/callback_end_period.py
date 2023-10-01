@@ -23,33 +23,33 @@ def date_chosen(call: CallbackQuery):
         bot.send_message(id, text, reply_markup=ReplyKeyboardRemove())
         bot.delete_state(id)
 
-    else:
+    elif action == "DAY":
         date = date
         now = datetime.now()
         offset = bot.retrieve_data(id).data.get("start_date")
+
         if date > now or date <= offset:
             text = f"Ошибка ввода! Выбери дату между сегодняшним днём и {offset.strftime('%d.%m.%Y')}"
             bot.send_message(
                 id, text, reply_markup=get_calendar(now, calendar_4_callback)
             )
         else:
-            if action == "DAY":
-                text = f'Ты выбрала дату: {date.strftime("%d.%m.%Y")}'
-                bot.send_message(id, text)
-                bot.set_state(id, period_states.get_full_report)
+            text = f'Ты выбрала дату: {date.strftime("%d.%m.%Y")}'
+            bot.send_message(id, text)
+            bot.set_state(id, period_states.get_full_report)
 
-                workdays = get_workdays_for_period(id, offset, date)
-                master_name = call.from_user.first_name
-                period = PeriodReport(workdays, offset, date, master_name)
-                text = period.get_report()
+            workdays = get_workdays_for_period(id, offset, date)
+            master_name = call.from_user.first_name
+            period = PeriodReport(workdays, offset, date, master_name)
+            text = period.get_report()
 
-                bot.send_message(id, text=text)
-                bot.add_data(id, period=period)
+            bot.send_message(id, text=text)
+            bot.add_data(id, period=period)
 
-                text = (
-                    "Можешь скачать детальный отчет, нажав на соответствующую кнопку."
-                )
-                bot.send_message(id, text=text, reply_markup=if_full_report())
+            text = (
+                "Можешь скачать детальный отчет, нажав на соответствующую кнопку."
+            )
+            bot.send_message(id, text=text, reply_markup=if_full_report())
 
 
 @bot.message_handler(state=period_states.get_end_date, content_types=["text"])
