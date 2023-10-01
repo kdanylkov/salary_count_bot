@@ -36,4 +36,4 @@ PROCEDURE_PARAMS = [
 ]
 
 SQLALCHEMY_URL = "sqlite:///./db.sqlite3"
-SQLALCHEMY_ECHO = True
+SQLALCHEMY_ECHO = False
