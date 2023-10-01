@@ -21,8 +21,6 @@ COMMANDS = (
     BotCommand("report", "Отчет за период"),
 )
 
-TIMEZONE = timezone("Europe/Moscow")
-
 PROCEDURE_PARAMS = [
     "id",
     "type",

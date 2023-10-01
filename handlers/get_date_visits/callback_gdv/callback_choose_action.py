@@ -2,7 +2,6 @@ from loader import bot, show_date_states, states, calendar_2_callback
 from keyboards.inline.choose_visit import choose_visit
 from exceptions.handlers import UnknownCallbackError
 from utils.calendar import get_calendar
-from config import TIMEZONE
 
 from telebot.types import CallbackQuery, Message
 from datetime import datetime
@@ -28,7 +27,7 @@ def callback_choose_action(call: CallbackQuery):
         bot.send_message(id, "Введи имя клиента:")
     elif call.data.endswith("another_date"):
         bot.set_state(id, show_date_states.choose_date)
-        now = TIMEZONE.localize(datetime.now())
+        now = datetime.now()
         text = "Выбери дату"
 
         bot.send_message(id, text, reply_markup=get_calendar(now, calendar_2_callback))

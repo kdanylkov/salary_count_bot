@@ -3,9 +3,7 @@ from telebot.types import CallbackQuery, ReplyKeyboardRemove, Message
 from datetime import datetime
 
 from loader import bot, calendar_1_callback, calendar, states
-from config import TIMEZONE
 from utils.calendar import get_calendar
-from data.objects import Workday
 
 
 @bot.callback_query_handler(
@@ -25,8 +23,8 @@ def date_chosen(call: CallbackQuery):
         bot.delete_state(id)
 
     else:
-        date = TIMEZONE.localize(date)
-        now = TIMEZONE.localize(datetime.now())
+        date = date
+        now = datetime.now()
         if date > now:
             text = "Дату в будущем нельзя выбирать!"
 

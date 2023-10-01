@@ -5,7 +5,6 @@ from loader import (
     calendar_3_callback,
     calendar_4_callback,
 )
-from config import TIMEZONE
 from utils.calendar import get_calendar
 
 from telebot.types import CallbackQuery, Message, ReplyKeyboardRemove
@@ -28,8 +27,8 @@ def date_chosen(call: CallbackQuery):
         bot.delete_state(id)
 
     else:
-        date = TIMEZONE.localize(date)
-        now = TIMEZONE.localize(datetime.now())
+        date = date
+        now = datetime.now()
         if date > now:
             text = "Дату в будущем нельзя выбирать!"
 

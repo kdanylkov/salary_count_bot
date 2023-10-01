@@ -1,5 +1,4 @@
 from loader import bot, states
-from config import TIMEZONE
 from utils.calendar import get_calendar
 from database.actions.user import get_or_create_user
 
@@ -14,7 +13,7 @@ def choose_treatment_date(message: Message):
 
     get_or_create_user(message.from_user.id, message.from_user.first_name)
 
-    now = TIMEZONE.localize(datetime.now())
+    now = datetime.now()
     text = "Выбери дату посещения"
 
     bot.send_message(message.chat.id, text, reply_markup=get_calendar(now))

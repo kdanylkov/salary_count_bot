@@ -1,5 +1,4 @@
 from loader import bot, period_states, calendar, calendar_4_callback
-from config import TIMEZONE
 from utils.calendar import get_calendar
 from data.objects import PeriodReport
 from database.actions.workday import get_workdays_for_period
@@ -25,8 +24,8 @@ def date_chosen(call: CallbackQuery):
         bot.delete_state(id)
 
     else:
-        date = TIMEZONE.localize(date)
-        now = TIMEZONE.localize(datetime.now())
+        date = date
+        now = datetime.now()
         offset = bot.retrieve_data(id).data.get("start_date")
         if date > now or date <= offset:
             text = f"Ошибка ввода! Выбери дату между сегодняшним днём и {offset.strftime('%d.%m.%Y')}"

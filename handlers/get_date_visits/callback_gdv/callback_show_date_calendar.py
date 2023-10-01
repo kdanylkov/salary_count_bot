@@ -2,7 +2,6 @@ from telebot.types import CallbackQuery, ReplyKeyboardRemove, Message
 from datetime import datetime
 
 from loader import bot, calendar_2_callback, calendar, show_date_states
-from config import TIMEZONE
 from utils.calendar import get_calendar
 from database.actions.workday import get_workday_with_visits_from_db
 from keyboards.inline.choose_date_action import choose_action
@@ -25,8 +24,8 @@ def show_date_visits_calendar(call: CallbackQuery):
         bot.delete_state(id)
 
     else:
-        date = TIMEZONE.localize(date)
-        now = TIMEZONE.localize(datetime.now())
+        date = date
+        now = datetime.now()
         if date > now:
             text = "Дату в будущем нельзя выбирать!"
 
