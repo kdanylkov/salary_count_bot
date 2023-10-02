@@ -19,9 +19,6 @@ def add_procedure(id):
 
     if edit_visit:
         proc_to_add = visit.procedures.last()
-        create_procedure_in_db(visit.db_id, proc_to_add.to_dict())
-
-        workday = bot.retrieve_data(id).data.get('workday')
 
         if for_deletion:
             try:
@@ -29,7 +26,9 @@ def add_procedure(id):
             except ProcedureNotDeleted:
                 raise
 
-        workday = get_workday_with_visits_from_db(id, workday.date)
+        create_procedure_in_db(visit.db_id, proc_to_add.to_dict())
+
+        workday = get_workday_with_visits_from_db(id, visit.date)
         visit = workday.get_visit_by_id(visit.db_id)
 
         bot.add_data(id, workday=workday, visit=visit)
