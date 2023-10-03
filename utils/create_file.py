@@ -27,6 +27,5 @@ def get_file_instance(period):
 
     HTML(string=html).write_pdf(out)
     file = BufferedReader(out)
-    print(file.name)
 
     return out

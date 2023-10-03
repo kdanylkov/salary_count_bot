@@ -21,9 +21,6 @@ def if_add_another_subscr_callback(call: CallbackQuery):
                 for_deletion = data.get('for_deletion')
                 visit = data.get('visit')
 
-                for p in visit.procedures:
-                    print(p.to_dict(), p.db_id)
-
             if edit_visit:
                 edit_proc_in_visit(id, visit, for_deletion)
 
