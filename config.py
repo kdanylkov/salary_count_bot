@@ -1,6 +1,5 @@
 from os import getenv
 from dotenv import load_dotenv, find_dotenv
-from pytz import timezone
 
 from telebot.types import BotCommand
 
@@ -34,4 +33,4 @@ PROCEDURE_PARAMS = [
 ]
 
 SQLALCHEMY_URL = "sqlite:///./db.sqlite3"
-SQLALCHEMY_ECHO = False
+SQLALCHEMY_ECHO = True

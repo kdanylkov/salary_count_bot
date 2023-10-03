@@ -1,5 +1,4 @@
 from sqlalchemy.exc import NoResultFound, IntegrityError
-from datetime import datetime
 
 from database.models import ProcedureModel
 from database.models import SubscriptionModel
@@ -41,6 +40,7 @@ def create_procedure_in_db(visit_id: int, proc_data: dict):
             visit = session.get(VisitModel, visit_id)
             proc = get_procedure_for_db(proc_data)
             visit.procedures.append(proc)
+            session.add(visit)
         except (IntegrityError, NoResultFound):
             return False
         else:

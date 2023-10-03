@@ -3,8 +3,8 @@ from exceptions.handlers import UnknownCallbackError
 from keyboards.inline.treatment_types import types_keyboard
 from keyboards.inline.if_one_more_visit import one_more_visit
 from data.objects import Visit
-from config import PROCEDURE_PARAMS
 from database.actions.visit import create_visit_with_procedures
+from utils.visit import clean_state
 
 from telebot.types import CallbackQuery, Message
 
@@ -13,7 +13,7 @@ from telebot.types import CallbackQuery, Message
 def add_another(call: CallbackQuery):
     id = call.message.chat.id
     bot.delete_message(id, call.message.id)
-    _clean_state(id)
+    clean_state(bot, id)
 
     if call.message:
         if call.data == "another_yes":
@@ -24,9 +24,7 @@ def add_another(call: CallbackQuery):
                 visit: Visit = data["visit"]
                 date = data["date"]
 
-                print(data['workday'].workday_report())
                 create_visit_with_procedures(visit.to_dict(), int(id), date)
-                print(data['workday'].workday_report())
 
             report = visit.visit_report()
             bot.send_message(id, report, reply_markup=one_more_visit())
@@ -39,10 +37,3 @@ def add_another(call: CallbackQuery):
 @bot.message_handler(state=states.if_add_another, content_types=["text"])
 def add_another_keyboard_input(message: Message):
     bot.send_message(message.chat.id, 'Нажми на кнопку "Да" или "Нет"⬆️')
-
-
-def _clean_state(id):
-    with bot.retrieve_data(id) as data:
-        for key in PROCEDURE_PARAMS:
-            if key in data:
-                data.pop(key)

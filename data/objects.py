@@ -22,11 +22,18 @@ class BaseCosmet(ABC):
         return int(self.percent * self.gross)
 
     def to_dict(self):
-        return dict(
+        data_dict = dict(
             (key, value)
             for (key, value) in self.__dict__.items()
             if key not in self._excluded_keys
         )
+
+        if isinstance(self, Laser) and self.subscriptions:
+            data_dict["subscriptions"] = [
+                sub.to_dict() for sub in self.subscriptions
+            ]
+
+        return data_dict
 
     @property
     def name(self):
@@ -157,8 +164,9 @@ class ProceduresManager(list):
         else:
             return None
 
-    def add_laser_sub(self, sub_gross: int):
+    def add_laser_sub(self, sub_gross: int) -> None:
         proc: Laser = self.last()
+
         if not isinstance(proc, Laser):
             raise NotLaserProcedure
         else:
@@ -192,20 +200,14 @@ class Visit:
         return sum
 
     def to_dict(self) -> dict:
-        data = {"date": self.date,
-                "client_name": self.client_name, "procedures": []}
-
-        for proc in self.procedures:
-            dict_proc = proc.to_dict()
-
-            if isinstance(proc, Laser) and proc.subscriptions:
-                dict_proc["subscriptions"] = []
-                for sub in proc.subscriptions:
-                    dict_proc["subscriptions"].append(sub.to_dict())
-
-            data["procedures"].append(dict_proc)
-
-        return data
+        return {
+            "date": self.date,
+            "client_name": self.client_name,
+            "procedures": [
+                proc.to_dict()
+                for proc in self.procedures
+            ]
+        }
 
     def visit_report(self, pdf=False):
         prefix = "for_pdf/" if pdf else ""
