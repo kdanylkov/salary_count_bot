@@ -1,12 +1,20 @@
 from os import getenv
 from dotenv import load_dotenv, find_dotenv
+from sqlalchemy.engine import URL
 
 from telebot.types import BotCommand
 
 
 if find_dotenv():
     load_dotenv()
+
     BOT_TOKEN = getenv("TELEGRAM_API_TOKEN")
+    PG_DB = getenv('POSTGRES_DATABASE')
+    PG_USER = getenv('POSTGRES_USER')
+    PG_PORT = getenv('POSTGRES_PORT')
+    PG_PASSWORD = getenv('POSTGRES_PASSWORD')
+    PG_HOST = getenv('POSTGRES_HOST')
+
     print("The token has been succussfully loaded")
 else:
     exit(1)
@@ -32,5 +40,11 @@ PROCEDURE_PARAMS = [
     "manual_value",
 ]
 
-SQLALCHEMY_URL = "sqlite:///./db.sqlite3"
+SQLALCHEMY_URL = URL.create(
+    drivername='postgresql+psycopg2',
+    username=PG_USER,
+    host=PG_HOST,
+    password=PG_PASSWORD,
+    database=PG_DB
+).render_as_string(hide_password=False)
 SQLALCHEMY_ECHO = True

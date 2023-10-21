@@ -1,6 +1,7 @@
 from database.actions.core import get_or_create, update_or_create
 from database.models import WorkDayModel
 from database.models import VisitModel
+from database.models import ProcedureModel
 from data.objects import Visit, Workday
 from loader import Session
 from utils.dates import range_of_dates
@@ -11,7 +12,8 @@ from sqlalchemy.orm import selectinload
 
 
 def get_or_create_workday(session, user_id: int, date: datetime):
-    workday, _ = get_or_create(session, WorkDayModel, user_id=user_id, date=date)
+    workday, _ = get_or_create(
+        session, WorkDayModel, user_id=user_id, date=date)
 
     return workday
 
@@ -24,7 +26,8 @@ def get_workday_with_visits_from_db(
 
         stmt = (
             select(VisitModel)
-            .options(selectinload(VisitModel.procedures))
+            .options(selectinload(VisitModel.procedures)
+                     .selectinload(ProcedureModel.subscriptions))
             .where(VisitModel.workday == workday)
         )
 

@@ -1,0 +1,27 @@
+services:
+  bot_db:
+    image: postgres:15
+    container_name: bot_db
+    env_file:
+      - ./.env
+    restart: on-failure
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  bot_app:
+    build: .
+    command: sh -c "python -B main.py"
+    depends_on:
+      - bot_db
+    env_file:
+      - ./.env
+    restart: always
+    volumes:
+      - .:/bot
+
+
+
+volumes:
+  pgdata:
+
+

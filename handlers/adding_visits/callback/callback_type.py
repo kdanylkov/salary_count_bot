@@ -23,7 +23,7 @@ def type_callback(call: CallbackQuery):
         )
         print(f"Error message: {err}")
     else:
-        bot.send_message(mes.chat.id, f"Ты выбрала: {type_chosen.value}")
+        bot.answer_callback_query(call.id, f"Ты выбрала: {type_chosen.value}")
         bot.add_data(mes.chat.id, type=type_chosen.name)
 
         _proceed_to_next_step_from_type(type_chosen, call.message.chat.id)
