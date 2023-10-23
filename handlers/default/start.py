@@ -4,7 +4,7 @@ from database.actions.user import get_or_create_user
 from telebot.types import Message
 
 
-@bot.message_handler(commands=["start", "help"])
+@bot.message_handler(commands=["start"])
 def send_welcome(message: Message):
 
     get_or_create_user(message.from_user.id, message.from_user.first_name)
@@ -13,6 +13,7 @@ def send_welcome(message: Message):
 Привет, {name}!
 Меня зовут SalaryCountBot.
 Я бот для расчета твоей зарплаты за определённый период.
+Для вызова справки нажми /help
     """.format(
         name=name
     )
