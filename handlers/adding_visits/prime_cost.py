@@ -11,7 +11,6 @@ def prime_cost_handler(message: Message):
     bot.add_data(id, prime_cost=prime_cost)
     bot.send_message(
         id,
-        f"Введено значение: {prime_cost}.\
-            Сколько заплатил клиент?",
+        f"Введено значение: {prime_cost}.\nСколько заплатил клиент?",
     )
     bot.set_state(id, states.choose_gross)

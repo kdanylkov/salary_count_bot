@@ -1,10 +1,13 @@
 from loader import bot
+from database.actions.user import get_or_create_user
 
 from telebot.types import Message
 
 
 @bot.message_handler(commands=["start", "help"])
 def send_welcome(message: Message):
+
+    get_or_create_user(message.from_user.id, message.from_user.first_name)
     name = message.from_user.first_name
     message_to_user = """
 Привет, {name}!

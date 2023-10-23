@@ -9,11 +9,9 @@ if find_dotenv():
     load_dotenv()
 
     BOT_TOKEN = getenv("TELEGRAM_API_TOKEN")
-    PG_DB = getenv('POSTGRES_DATABASE')
+    PG_DB = getenv('POSTGRES_DB')
     PG_USER = getenv('POSTGRES_USER')
-    PG_PORT = getenv('POSTGRES_PORT')
     PG_PASSWORD = getenv('POSTGRES_PASSWORD')
-    PG_HOST = getenv('POSTGRES_HOST')
 
     print("The token has been succussfully loaded")
 else:
@@ -43,8 +41,8 @@ PROCEDURE_PARAMS = [
 SQLALCHEMY_URL = URL.create(
     drivername='postgresql+psycopg2',
     username=PG_USER,
-    host=PG_HOST,
     password=PG_PASSWORD,
-    database=PG_DB
+    database=PG_DB,
+    host='bot_db',
 ).render_as_string(hide_password=False)
 SQLALCHEMY_ECHO = True
