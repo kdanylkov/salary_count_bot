@@ -24,6 +24,7 @@ COMMANDS = (
     BotCommand("add_visit", "Добавить посещение"),
     BotCommand("show_date", "Показать посещения за дату"),
     BotCommand("report", "Отчет за период"),
+    BotCommand("alarm", "Напоминания")
 )
 
 PROCEDURE_PARAMS = [

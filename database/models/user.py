@@ -24,6 +24,7 @@ class UserModel(Base):
     visits: Mapped[list["VisitModel"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
     )
+    alarm_on: Mapped[bool] = mapped_column(default=False)
 
     def __str__(self) -> str:
         return f"User (telegram_id={self.id}, name={self.name})"
