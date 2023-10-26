@@ -1,6 +1,7 @@
 from loader import bot, period_states
 from exceptions.handlers import UnknownCallbackError
-from utils.create_file import send_report, get_file_instance
+from utils.create_file import send_report
+from utils.handler import cancel_action
 from data.objects import PeriodReport
 
 from telebot.types import CallbackQuery, Message
@@ -15,8 +16,7 @@ def callback_if_full_report(call: CallbackQuery):
         period: PeriodReport = bot.retrieve_data(id).data.get("period")
         send_report(period, bot, id)
     elif call.data.endswith("cancel"):
-        bot.delete_state(id)
-        bot.send_message(id, "Отмена операции")
+        cancel_action(id, bot)
     else:
         raise UnknownCallbackError(call.data)
 

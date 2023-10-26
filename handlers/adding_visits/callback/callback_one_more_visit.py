@@ -2,6 +2,7 @@ from loader import bot, states, show_date_states
 from data.objects import Workday
 from database.actions.workday import get_workday_with_visits_from_db
 from keyboards.inline.choose_date_action import choose_action
+from utils.handler import cancel_action
 
 from telebot.types import CallbackQuery, Message
 from datetime import datetime
@@ -16,8 +17,7 @@ def callback_one_more_visit(call: CallbackQuery):
         bot.set_state(id, states.client_name)
         bot.send_message(id, "Введи имя клиента:")
     elif call.data.endswith("cancel"):
-        bot.delete_state(id)
-        bot.send_message(id, "Отмена.")
+        cancel_action(id, bot)
     elif call.data.endswith("overview"):
         date: datetime = bot.retrieve_data(id).data.get("date")
         workday: Workday = get_workday_with_visits_from_db(id, date)

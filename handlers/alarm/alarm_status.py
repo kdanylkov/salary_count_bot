@@ -1,4 +1,4 @@
-from loader import bot
+from loader import bot, alarm_states
 from database.actions.user import get_user_alarm_status
 from keyboards.inline.alarm_options import alarm_on_off
 
@@ -15,3 +15,4 @@ def handle_alarm_status(message: Message):
 
     text = f'Напоминания <b>{status.upper()}</b>'
     bot.send_message(id, text, reply_markup=alarm_on_off(alarm_on))
+    bot.set_state(id, alarm_states.alarm_action)

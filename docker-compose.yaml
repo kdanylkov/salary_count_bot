@@ -16,7 +16,7 @@ services:
 
   bot_app:
     build: .
-    command: sh -c "python -B main.py"
+    command: sh -c "alembic upgrade head && python -B main.py"
     depends_on:
       - bot_db
     env_file:

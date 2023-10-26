@@ -32,3 +32,7 @@ class PeriodReportStates(StatesGroup):
     get_start_date = State()
     get_end_date = State()
     get_full_report = State()
+
+
+class AlarmStates(StatesGroup):
+    alarm_action = State()

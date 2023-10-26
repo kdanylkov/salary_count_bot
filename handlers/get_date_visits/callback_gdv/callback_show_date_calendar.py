@@ -1,8 +1,9 @@
-from telebot.types import CallbackQuery, ReplyKeyboardRemove, Message
+from telebot.types import CallbackQuery, Message
 from datetime import datetime
 
 from loader import bot, calendar_2_callback, calendar, show_date_states
 from utils.calendar import get_calendar
+from utils.handler import cancel_action
 from database.actions.workday import get_workday_with_visits_from_db
 from keyboards.inline.choose_date_action import choose_action
 from data.objects import Workday
@@ -19,9 +20,7 @@ def show_date_visits_calendar(call: CallbackQuery):
     )
 
     if action == "CANCEL":
-        text = "Операция отменена."
-        bot.send_message(id, text, reply_markup=ReplyKeyboardRemove())
-        bot.delete_state(id)
+        cancel_action(id, bot)
 
     elif action == "DAY":
         date = date

@@ -6,8 +6,9 @@ from loader import (
     calendar_4_callback,
 )
 from utils.calendar import get_calendar
+from utils.handler import cancel_action
 
-from telebot.types import CallbackQuery, Message, ReplyKeyboardRemove
+from telebot.types import CallbackQuery, Message
 from datetime import datetime
 
 
@@ -22,10 +23,7 @@ def date_chosen(call: CallbackQuery):
     )
 
     if action == "CANCEL":
-        text = "Операция отменена."
-        bot.send_message(id, text, reply_markup=ReplyKeyboardRemove())
-        bot.delete_state(id)
-
+        cancel_action(id, bot)
     elif action == "DAY":
         date = date
         now = datetime.now()

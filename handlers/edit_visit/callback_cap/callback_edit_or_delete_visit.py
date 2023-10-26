@@ -6,6 +6,7 @@ from keyboards.inline.treatment_types import types_keyboard
 from exceptions.handlers import UnknownCallbackError
 from exceptions.objects import VisitNotDeleted
 from utils.visit import delete_visit
+from utils.handler import cancel_action
 
 from telebot.types import CallbackQuery
 
@@ -46,8 +47,7 @@ def callback_edit_or_delete_visit(call: CallbackQuery):
                          reply_markup=types_keyboard())
 
     elif suffix == 'cancel':
-        bot.delete_state(id)
-        bot.send_message(id, "Операция отменена.")
+        cancel_action(id, bot)
 
     else:
         raise UnknownCallbackError(call.data)
