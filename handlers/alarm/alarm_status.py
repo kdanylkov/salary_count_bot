@@ -13,6 +13,11 @@ def handle_alarm_status(message: Message):
 
     status = 'Включены' if alarm_on else 'Отключены'
 
-    text = f'Напоминания <b>{status.upper()}</b>'
+    text = (
+            'Если напоманания включены, каждый день в 21:00 тебе будет'
+            ' приходить сообщение с текстом: '
+            '"Не забудь внести новые записи!".\n'
+            f'Напоминания <b>{status.upper()}</b>'
+            )
     bot.send_message(id, text, reply_markup=alarm_on_off(alarm_on))
     bot.set_state(id, alarm_states.alarm_action)

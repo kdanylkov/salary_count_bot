@@ -21,5 +21,10 @@ def choose_action(visits):
             text="Показать другую дату", callback_data="action:another_date"
         )
     )
+    markup.add(
+            InlineKeyboardButton(
+                text='Отмена', callback_data='action:cancel'
+                )
+            )
 
     return markup

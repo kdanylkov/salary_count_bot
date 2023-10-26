@@ -2,6 +2,7 @@ from loader import bot, show_date_states, states, calendar_2_callback
 from keyboards.inline.choose_visit import choose_visit
 from exceptions.handlers import UnknownCallbackError
 from utils.calendar import get_calendar
+from utils.handler import cancel_action
 
 from telebot.types import CallbackQuery, Message
 from datetime import datetime
@@ -31,6 +32,8 @@ def callback_choose_action(call: CallbackQuery):
         text = "Выбери дату"
 
         bot.send_message(id, text, reply_markup=get_calendar(now, calendar_2_callback))
+    elif call.data.endswith('cancel'):
+        cancel_action(id, bot)
     else:
         raise UnknownCallbackError(call.data)
 
