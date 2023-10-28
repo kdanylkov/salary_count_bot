@@ -187,11 +187,16 @@ class ProceduresManager(list):
 
 
 class Visit:
-    def __init__(self, date: datetime, client_name: str, db_id: int | None = None):
+    def __init__(self,
+                 date: datetime,
+                 client_name: str,
+                 db_id: int | None = None,
+                 laser_conversion_status: str = 'UNKNOWN'):
         self.date = date
         self.client_name = client_name
         self.procedures = ProceduresManager()
         self.db_id = db_id
+        self.laser_conversion_status = laser_conversion_status
 
     def get_total(self):
         sum = 0
@@ -203,6 +208,7 @@ class Visit:
         return {
             "date": self.date,
             "client_name": self.client_name,
+            "laser_conversion_status": self.laser_conversion_status,
             "procedures": [
                 proc.to_dict()
                 for proc in self.procedures

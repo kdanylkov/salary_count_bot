@@ -47,3 +47,10 @@ SQLALCHEMY_URL = URL.create(
     host='bot_db',
 ).render_as_string(hide_password=False)
 SQLALCHEMY_ECHO = True
+
+LASER_CONVERSION_STATUSES = [
+    'UNKNOWN',
+    'NOT_NEW',
+    'NEW_BOUGHT',
+    'NEW_NOT_BOUGHT',
+]

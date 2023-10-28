@@ -132,3 +132,8 @@ dmypy.json
 
 # Jetbrains Intellij IDEA
 .idea/
+
+# Docker-compose specific
+docker-compose.downgrade.yaml
+docker-compose.adminer.yaml
+docker-compose.makemig.yaml

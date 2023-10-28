@@ -1,9 +1,11 @@
 from .base import Base
+from config import LASER_CONVERSION_STATUSES
 
 from typing import TYPE_CHECKING
-
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
+from sqlalchemy import Enum
+from sqlalchemy import Column
 
 if TYPE_CHECKING:
     from .workday import WorkDayModel
@@ -23,6 +25,9 @@ class VisitModel(Base):
     procedures: Mapped[list["ProcedureModel"]] = relationship(
         back_populates="visit", cascade="all, delete-orphan"
     )
+    laser_conversion_status = Column(Enum(*LASER_CONVERSION_STATUSES,
+                                          name='conversion_enum'),
+                                     default='UNKNOWN')
 
     def __str__(self) -> str:
         return f"Visit of {self.client_name} for {self.workday.date}"
