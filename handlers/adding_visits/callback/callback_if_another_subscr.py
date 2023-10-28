@@ -1,7 +1,6 @@
 from loader import bot, states
 from keyboards.inline.add_another import if_add_another
 from utils.procedures import edit_proc_in_visit
-from data.objects import Visit
 
 from telebot.types import CallbackQuery, Message
 

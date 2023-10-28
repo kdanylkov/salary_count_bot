@@ -8,4 +8,6 @@ from . import (
     callback_sub_visits,
     callback_type,
     callback_one_more_visit,
+    callback_if_new_laser_client,
+    callback_if_bought_sub,
 )

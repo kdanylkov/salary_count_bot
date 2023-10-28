@@ -3,8 +3,10 @@ from database.actions.visit import delete_visit_from_db
 from exceptions.objects import VisitNotDeleted
 from config import PROCEDURE_PARAMS
 
+from telebot import TeleBot
 
-def delete_visit(bot, id: str | int) -> None:
+
+def delete_visit(bot: TeleBot, id: str | int) -> None:
     visit = bot.retrieve_data(id).data["visit"]
     workday: Workday = bot.retrieve_data(id).data['workday']
 
