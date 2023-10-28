@@ -15,7 +15,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   bot_app:
-    build: .
+    image: kdanylkov/salary_bot:v_1.00
     command: sh -c "alembic upgrade head && python -B main.py"
     depends_on:
       - bot_db
