@@ -40,6 +40,7 @@ class VisitModel(Base):
             "client_name": self.client_name,
             "date": self.workday.date,
             "db_id": self.id,
+            "laser_conversion_status": self.laser_conversion_status,
             "procedures": [],
         }
         for proc in self.procedures:

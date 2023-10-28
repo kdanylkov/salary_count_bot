@@ -5,6 +5,7 @@ from keyboards.inline.first_proc import if_first
 from keyboards.inline.subcr_laser import if_subscr_laser
 
 from telebot.types import CallbackQuery, Message
+from telebot.util import quick_markup
 
 
 @bot.callback_query_handler(func=lambda c: c.data in TYPES_LIST)
@@ -51,12 +52,28 @@ def _proceed_to_next_step_from_type(type: TreatemtTypes, id: str | int):
             state = states.prime_cost
             bot.send_message(id, "Введи себестоимость материалов")
         case "LASER":
-            bot.set_state(id, states.if_subscr_laser)
-
-            bot.send_message(
-                id,
-                "Выбери вид посещения (либо введи вручную свой доход)",
-                reply_markup=if_subscr_laser(),
-            )
+            from data.objects import Visit
+            visit: Visit = bot.retrieve_data(id).data.get('visit')
+            if visit.laser_conversion_status == 'UNKNOWN':
+                state = states.if_laser_new
+                bot.send_message(id, 'Это новый клиент?',
+                                 reply_markup=_if_new_client_markup())
+            else:
+                state = states.if_subscr_laser
+                bot.send_message(
+                    id,
+                    "Выбери вид посещения (либо введи вручную свой доход)",
+                    reply_markup=if_subscr_laser(),
+                )
 
     bot.set_state(id, state)
+
+
+def _if_new_client_markup():
+    return quick_markup(
+        {
+            'Да': {'callback_data': 'laser_new_client_yes'},
+            'Нет': {'callback_data': 'laser_new_client_no'},
+        },
+        row_width=2
+    )
