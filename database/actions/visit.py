@@ -10,9 +10,12 @@ from sqlalchemy.exc import NoResultFound, IntegrityError
 def create_visit_with_procedures(data: dict, user_id, date: datetime):
     with Session.begin() as session:
         workday = get_or_create_workday(session, user_id, date)
+        client_name = data["client_name"]
+        laser_conversion_status = data["laser_conversion_status"]
 
         visit = VisitModel(
-            client_name=data["client_name"], workday=workday, user_id=user_id
+            client_name=client_name, workday=workday,
+            user_id=user_id, laser_conversion_status=laser_conversion_status
         )
 
         procedures = data["procedures"]
