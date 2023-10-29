@@ -1,6 +1,10 @@
 import config
 from states.user_states import (
-    AddVisitStates, ShowDateStates, PeriodReportStates, AlarmStates
+    AddVisitStates,
+    ShowDateStates,
+    PeriodReportStates,
+    AlarmStates,
+    ConversionStates
 )
 from utils.set_filters import set_filters
 from database.actions.core import init_db
@@ -22,6 +26,7 @@ states = AddVisitStates()
 show_date_states = ShowDateStates()
 period_states = PeriodReportStates()
 alarm_states = AlarmStates()
+conversion_states = ConversionStates()
 
 # Set up calendar and calendar callbacks
 calendar = Calendar(language=RUSSIAN_LANGUAGE)

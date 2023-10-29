@@ -1,10 +1,11 @@
 from database.actions.workday import get_or_create_workday
-from database.models import VisitModel
+from database.models import VisitModel, WorkDayModel
 from database.actions.procedures import get_procedure_for_db
 from loader import Session
 
 from datetime import datetime
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import func
 
 
 def create_visit_with_procedures(data: dict, user_id: int, date: datetime) -> None:
@@ -69,3 +70,28 @@ def delete_visit_from_db(id: int) -> bool:
                 return False
         except NoResultFound:
             return False
+
+
+def calculate_conversion_rate(user_id: int,
+                              start_date: datetime,
+                              end_date: datetime) -> int:
+    with Session.begin() as session:
+
+        total_new_clients, new_clients_bought = session.query(
+            func.count(VisitModel.user_id),
+            func.count(func.nullif(
+                VisitModel.laser_conversion_status != 'NEW_BOUGHT', True))
+        ).filter(
+            VisitModel.user_id == user_id,
+            VisitModel.workday.has(
+                WorkDayModel.date.between(start_date, end_date)),
+            VisitModel.laser_conversion_status.in_(
+                ['NEW_BOUGHT', 'NEW_NOT_BOUGHT'])
+        ).first()
+
+        if total_new_clients > 0:
+            conversion_rate = (new_clients_bought / total_new_clients) * 100
+        else:
+            conversion_rate = 0
+
+        return int(conversion_rate), total_new_clients, new_clients_bought

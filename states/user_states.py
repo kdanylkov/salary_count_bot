@@ -38,3 +38,7 @@ class PeriodReportStates(StatesGroup):
 
 class AlarmStates(StatesGroup):
     alarm_action = State()
+
+
+class ConversionStates(StatesGroup):
+    choose_month = State()

@@ -24,7 +24,8 @@ COMMANDS = (
     BotCommand("add_visit", "Добавить посещение"),
     BotCommand("show_date", "Показать посещения за дату"),
     BotCommand("report", "Отчет за период"),
-    BotCommand("alarm", "Напоминания")
+    BotCommand("alarm", "Напоминания"),
+    BotCommand("conversion", "Посчитать конверсию")
 )
 
 PROCEDURE_PARAMS = [
@@ -54,3 +55,33 @@ LASER_CONVERSION_STATUSES = [
     'NEW_BOUGHT',
     'NEW_NOT_BOUGHT',
 ]
+
+MONTH_MAPPING = {
+    'January': 'Январь',
+    'February': 'Февраль',
+    'March': 'Март',
+    'April': 'Апрель',
+    'May': 'Май',
+    'June': 'Июнь',
+    'July': 'Июль',
+    'August': 'Август',
+    'September': 'Сентябрь',
+    'October': 'Октябрь',
+    'November': 'Ноябрь',
+    'December': 'Декабрь'
+}
+
+MONTH_MAPPING_PREPOSITIONAL_CASE = {
+    '1': 'январе',
+    '2': 'феврале',
+    '3': 'марте',
+    '4': 'апреле',
+    '5': 'мае',
+    '6': 'июне',
+    '7': 'июле',
+    '8': 'августе',
+    '9': 'сентябре',
+    '10': 'октябре',
+    '11': 'ноябре',
+    '12': 'Декабре',
+}
