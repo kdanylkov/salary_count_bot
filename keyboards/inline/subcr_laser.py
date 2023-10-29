@@ -5,7 +5,7 @@ def if_subscr_laser():
     return quick_markup(
         {
             "Разовое посещение": {"callback_data": "laser_sub_no"},
-            "Абонимент(ы)": {"callback_data": "laser_sub_yes"},
+            "Абонемент(ы)": {"callback_data": "laser_sub_yes"},
             "Ввести вручную": {"callback_data": "laser_sub_manual"},
         },
         row_width=2,

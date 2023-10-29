@@ -13,7 +13,7 @@ def if_add_another_subscr_callback(call: CallbackQuery):
 
         if call.data.endswith("yes"):
             bot.set_state(id, states.sub_gross)
-            bot.send_message(id, "Введи стоимость абонимента")
+            bot.send_message(id, "Введи стоимость абонемента")
         elif call.data.endswith("no"):
             with bot.retrieve_data(id) as data:
                 edit_visit = data.get('edit_visit')

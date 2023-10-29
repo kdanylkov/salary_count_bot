@@ -19,7 +19,7 @@ def sub_gross_handler(message: Message):
     bot.add_data(id, visit=visit)
 
     bot.set_state(id, states.if_add_subscr)
-    bot.send_message(id, "Добавить еще абонимент?", reply_markup=if_another_subscr())
+    bot.send_message(id, "Добавить еще абонемент?", reply_markup=if_another_subscr())
 
 
 @bot.message_handler(state=states.sub_gross, is_positive_digit=False)

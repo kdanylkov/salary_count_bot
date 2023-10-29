@@ -21,7 +21,7 @@ def if_first_handler(call: CallbackQuery):
 
         bot.add_data(id, first=first)
         bot.set_state(id, states.if_subscr)
-        bot.send_message(id, "Процедура по абонименту?", reply_markup=if_subscription())
+        bot.send_message(id, "Процедура по абонементу?", reply_markup=if_subscription())
 
 
 @bot.message_handler(state=states.if_first, content_types=["text"])

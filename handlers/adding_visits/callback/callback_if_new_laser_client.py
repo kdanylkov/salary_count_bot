@@ -26,7 +26,7 @@ def callback_if_new_laser_client(call: CallbackQuery):
         )
     elif call.data.endswith('yes'):
         state = states.if_bought_sub
-        bot.send_message(id, 'Клиент купил абонимент?',
+        bot.send_message(id, 'Клиент купил абонемент?',
                          reply_markup=_if_bought_sub_markup())
     else:
         raise UnknownCallbackError(call.data)

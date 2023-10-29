@@ -19,7 +19,7 @@ def visits_count_callback(call: CallbackQuery):
 
         bot.add_data(id, sub_visits=sub_visits)
         bot.set_state(id, states.choose_gross)
-        bot.send_message(id, "Сколько клиент заплатил за абонимент?")
+        bot.send_message(id, "Сколько клиент заплатил за абонемент?")
 
 
 @bot.message_handler(state=states.visits_in_subscr, content_types=["text"])

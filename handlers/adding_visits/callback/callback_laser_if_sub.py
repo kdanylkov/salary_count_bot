@@ -12,7 +12,7 @@ def callback_laser_if_sub(call: CallbackQuery):
     if call.message:
         if call.data.endswith("yes"):
             bot.set_state(id, states.sub_gross)
-            bot.send_message(id, "Введи стоимость абонимента")
+            bot.send_message(id, "Введи стоимость абонемента")
 
             with bot.retrieve_data(id) as data:
                 visit: Visit = data["visit"]

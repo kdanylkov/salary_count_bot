@@ -12,6 +12,7 @@ def handle_help(message: Message):
     - /show_date: Посмотреть информацию за конкретный день.
     - /report: Создать отчет за период (можно также скачать файл в формате .pdf)
     - /alarm: Включить/отключить напоминания о внесении новых записей.
+    - /conversion: Посчитать конверсию за выбранный месяц.
     """
     bot.delete_state(message.from_user.id, message.chat.id)
     bot.send_message(message.chat.id, message_to_user)

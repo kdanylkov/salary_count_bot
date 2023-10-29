@@ -22,7 +22,7 @@ def handle_callback_month_choice(call: CallbackQuery):
     month_prepos = MONTH_MAPPING_PREPOSITIONAL_CASE[month]
     text = (
         f'Всего новых клиентов в {month_prepos}: {total_new_clients}.\n'
-        f'Купили абонимент: {new_clients_bought}.\n'
+        f'Купили абонемент: {new_clients_bought}.\n'
         f'Конверсия: {conversion_rate}%'
     )
     bot.send_message(id, text)

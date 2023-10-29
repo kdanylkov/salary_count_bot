@@ -15,7 +15,7 @@ def if_first_handler(call: CallbackQuery):
             sub = True
             bot.set_state(id, states.visits_in_subscr)
             bot.send_message(
-                id, "Сколько посещений в абонименте?", reply_markup=visits_markup()
+                id, "Сколько посещений в абонементе?", reply_markup=visits_markup()
             )
         elif call.data == "subscription_no":
             sub = False
