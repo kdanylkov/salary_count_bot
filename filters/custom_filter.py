@@ -12,3 +12,15 @@ class IsDigitFilter(SimpleCustomFilter):
             return False
 
         return value > 0
+
+
+class IsDigitZeroAndAboveFilter(IsDigitFilter):
+    key = "is_positive_and_zero_digit"
+
+    def check(self, message: Message):
+        try:
+            value = int(message.text)
+        except ValueError:
+            return False
+
+        return value >= 0
