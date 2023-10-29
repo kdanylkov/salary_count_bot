@@ -6,6 +6,6 @@ def one_more_visit():
         {
             "Еще одно посещение": {"callback_data": "one_more_visit:yes"},
             "Обзор рабочего дня": {"callback_data": "one_more_visit:overview"},
-            "Отмена": {"callback_data": "one_more_visit:no"},
+            "Отмена": {"callback_data": "one_more_visit:cancel"},
         }
     )
