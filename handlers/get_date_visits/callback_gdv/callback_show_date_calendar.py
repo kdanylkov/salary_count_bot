@@ -41,7 +41,7 @@ def show_date_visits_calendar(call: CallbackQuery):
             text = workday.workday_report()
 
             bot.add_data(id, workday=workday, date=date)
-            bot.send_message(id, text, reply_markup=(choose_action(workday.visits)))
+            bot.send_message(id, text, reply_markup=choose_action(workday.visits))
 
 
 @bot.message_handler(state=show_date_states.choose_date, content_types=["text"])

@@ -1,7 +1,7 @@
 from .base import Base
 
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column

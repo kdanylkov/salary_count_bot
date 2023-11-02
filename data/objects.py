@@ -230,7 +230,7 @@ class Visit:
         return False
 
 
-Minutes = int
+Hours = int
 
 
 class Workday:
@@ -238,7 +238,7 @@ class Workday:
         self,
         date: datetime,
         visits: list[VisitModel] | None = None,
-        idle_time: Minutes = 0,
+        idle_time: Hours = 0,
     ):
         self.date = date
         self.visits = visits
@@ -272,7 +272,7 @@ class Workday:
         return visit
 
     def get_idle_time_pay(self):
-        return int(self.idle_time / 60 * 150)
+        return self.idle_time * 150
 
     def get_total(self):
         return sum([v.get_total() for v in self.visits]) + self.get_idle_time_pay()
@@ -306,6 +306,13 @@ class Workday:
         for v in self.visits:
             if v.db_id == visit_id:
                 return v
+
+    def get_hour_word_form(self) -> str:
+        if self.idle_time == 1:
+            return 'час'
+        elif self.idle_time in (2, 3, 4):
+            return 'часа'
+        return 'часов'
 
 
 class PeriodReport:

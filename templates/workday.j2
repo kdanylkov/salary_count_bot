@@ -3,6 +3,6 @@
 {% else %}
 Нет сохранённых посещений в этот день.
 {% endfor %}
-<b>Время</b>: {{ workday.idle_time }} минут ({{ workday.get_idle_time_pay() }} рублей).
+<b>Время</b>: {{ workday.idle_time }} {{ workday.get_hour_word_form() }} ({{ workday.get_idle_time_pay() }} рублей).
 
 <b>Итого за рабочий день</b>: {{ workday.get_total() }} рублей.

@@ -9,6 +9,6 @@
 {% endfor %}
 </div>
 <b>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</b>
-<p><b><u><i>Время</i></u></b>: {{ workday.idle_time }} минут ({{ workday.get_idle_time_pay() }} рублей).</p>
+<p><b><u><i>Время</i></u></b>: {{ workday.idle_time }} {{ workday.get_hour_word_form() }} ({{ workday.get_idle_time_pay() }} рублей).</p>
 
 <p><b><u><i>Итого за рабочий день</i></u></b>: {{ workday.get_total() }} рублей.</p>
