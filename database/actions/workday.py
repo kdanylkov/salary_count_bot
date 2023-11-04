@@ -28,7 +28,8 @@ def get_workday_with_visits_from_db(
             select(VisitModel)
             .options(selectinload(VisitModel.procedures)
                      .selectinload(ProcedureModel.subscriptions))
-            .where(VisitModel.workday == workday)
+            .where(VisitModel.workday == workday).
+            order_by(VisitModel.client_name)
         )
 
         db_visits = session.scalars(stmt).all()
