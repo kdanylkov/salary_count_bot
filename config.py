@@ -12,6 +12,7 @@ if find_dotenv():
     PG_DB = getenv('POSTGRES_DB')
     PG_USER = getenv('POSTGRES_USER')
     PG_PASSWORD = getenv('POSTGRES_PASSWORD')
+    DB_ECHO = getenv('SQLALCHEMY_ECHO')
 
     print("The token has been succussfully loaded")
 else:
@@ -47,7 +48,7 @@ SQLALCHEMY_URL = URL.create(
     database=PG_DB,
     host='bot_db',
 ).render_as_string(hide_password=False)
-SQLALCHEMY_ECHO = True
+SQLALCHEMY_ECHO = (DB_ECHO == 'True')
 
 LASER_CONVERSION_STATUSES = [
     'UNKNOWN',
