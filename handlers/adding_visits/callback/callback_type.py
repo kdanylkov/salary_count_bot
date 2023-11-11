@@ -41,7 +41,7 @@ def type_choice_keyboard_input(message: Message):
 def _proceed_to_next_step_from_type(type: TreatemtTypes, id: str | int):
     state = None
     match type.name:
-        case "CLASSIC_COSMETOLOGY" | "COSMETICS":
+        case "CLASSIC_COSMETOLOGY" | "COSMETICS" | "OWN_COSMET":
             state = states.choose_gross
             bot.send_message(id, "Сколько заплатил клиент?")
         case "ROLLER_MASSAGE" | "APPARATUS_COSMETOLOGY":

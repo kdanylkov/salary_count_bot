@@ -53,6 +53,10 @@ class Cosmetics(BaseCosmet):
     percent = 0.1
 
 
+class OwnCosmet(BaseCosmet):
+    percent = 0.6
+
+
 class ClassicCosmetology(BaseCosmet):
     percent = 0.4
 
@@ -151,9 +155,11 @@ class ProceduresManager(list):
         "ROLLER_MASSAGE": RollerMassage,
         "INJECTIONS": Injections,
         "LASER": Laser,
+        "OWN_COSMET": OwnCosmet,
     }
 
     def add(self, **kwargs):
+        print(kwargs)
         info = self._get_procedure_info(kwargs)
         procedure = self.PROCEDURES[info["type"]]
         self.append(procedure(**info))
