@@ -120,7 +120,7 @@ def get_visits_new_clients_by_period(user_id: int,
             VisitModel.laser_conversion_status.in_(
                 ['NEW_BOUGHT', 'NEW_NOT_BOUGHT']
             )
-        ).order_by(VisitModel.workday.date)
+        ).order_by(WorkDayModel.date)
 
         result = session.execute(stmt)
         visits = [
