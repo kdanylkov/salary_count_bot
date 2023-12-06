@@ -3,7 +3,7 @@ from abc import ABC
 from typing import List
 
 from exceptions.objects import NotLaserProcedure
-from config import PROCEDURE_PARAMS
+from config import PROCEDURE_PARAMS, CLIENT_ORDER_MAPPING
 from data.types import TreatemtTypes
 from utils.jinja import get_template
 from utils.visit import create_visit_from_db_model
@@ -222,10 +222,10 @@ class Visit:
             ]
         }
 
-    def visit_report(self, pdf=False):
+    def visit_report(self, ordering: str, pdf=False):
         prefix = "for_pdf/" if pdf else ""
         tmpt = get_template(f"{prefix}visit.j2")
-        msg = tmpt.render(visit=self, total=self.get_total())
+        msg = tmpt.render(visit=self, total=self.get_total(), ordering=ordering)
 
         return msg
 
@@ -274,7 +274,7 @@ class Workday:
     def workday_report(self, pdf=False) -> str:
         prefix = "for_pdf/" if pdf else ""
         tmpt = get_template(f"{prefix}workday.j2")
-        msg = tmpt.render(workday=self)
+        msg = tmpt.render(workday=self, order_mapping=CLIENT_ORDER_MAPPING)
         return msg
 
     def date_str(self) -> str:

@@ -1,6 +1,7 @@
 <div>
 {% for v in workday.visits %}
-<p>{{ v.visit_report(pdf=True) }}</p>
+{% set order = loop.index %}
+<p>{{ v.visit_report(pdf=True, ordering=order_mapping[order]) }}</p>
 {% if not (workday.get_number_of_visits() == loop.index)  %}
 ---------------------------------------------------
 {% endif %}
