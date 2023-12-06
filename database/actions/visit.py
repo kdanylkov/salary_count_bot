@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from database.actions.workday import get_or_create_workday
 from database.models import VisitModel, WorkDayModel
 from database.actions.procedures import get_procedure_for_db
@@ -6,6 +8,13 @@ from loader import Session
 from datetime import datetime
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy import func
+from sqlalchemy import select
+from sqlalchemy import and_
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from data.objects import Visit
 
 
 def create_visit_with_procedures(data: dict, user_id: int, date: datetime) -> None:
@@ -95,3 +104,26 @@ def calculate_conversion_rate(user_id: int,
             conversion_rate = 0
 
         return int(conversion_rate), total_new_clients, new_clients_bought
+
+
+def get_visits_new_clients_by_period(user_id: int,
+                                     start_date: datetime,
+                                     end_date: datetime) -> list[Visit]:
+    from utils.visit import create_visit_from_db_model
+
+    with Session.begin() as session:
+        stmt = select(VisitModel).join(VisitModel.workday).filter(
+            VisitModel.user_id == user_id,
+            VisitModel.workday.has(
+                WorkDayModel.date.between(start_date, end_date)
+            ),
+            VisitModel.laser_conversion_status.in_(
+                ['NEW_BOUGHT', 'NEW_NOT_BOUGHT']
+            )
+        )
+
+        result = session.execute(stmt)
+        visits = [
+            create_visit_from_db_model(visit) for visit in result.scalars()
+        ]
+        return visits

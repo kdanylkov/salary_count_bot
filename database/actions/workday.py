@@ -1,14 +1,20 @@
+from __future__ import annotations
+
 from database.actions.core import get_or_create, update_or_create
 from database.models import WorkDayModel
 from database.models import VisitModel
 from database.models import ProcedureModel
-from data.objects import Visit, Workday
 from loader import Session
 from utils.dates import range_of_dates
 
 from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from data.objects import Visit, Workday
 
 
 def get_or_create_workday(session, user_id: int, date: datetime):
@@ -21,6 +27,8 @@ def get_or_create_workday(session, user_id: int, date: datetime):
 def get_workday_with_visits_from_db(
     user_id: int, date: datetime
 ) -> list[dict[tuple, Visit]] | None:
+    from data.objects import Workday
+
     with Session.begin() as session:
         workday = get_or_create_workday(session, user_id, date)
 

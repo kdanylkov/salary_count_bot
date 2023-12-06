@@ -6,6 +6,7 @@ from exceptions.objects import NotLaserProcedure
 from config import PROCEDURE_PARAMS
 from data.types import TreatemtTypes
 from utils.jinja import get_template
+from utils.visit import create_visit_from_db_model
 from database.models import VisitModel
 
 
@@ -259,23 +260,7 @@ class Workday:
         if value is None:
             self._visits = []
         else:
-            self._visits = [self._create_visit_from_db_model(val)
-                            for val in value]
-
-    def _create_visit_from_db_model(self, visit: VisitModel):
-        data = visit.as_dict()
-        procs = data.pop("procedures")
-        visit = Visit(**data)
-
-        for proc in procs:  # type: dict
-            if proc["type"] == "LASER" and proc.get("subscriptions"):
-                subscriptions = proc.pop("subscriptions")
-                visit.procedures.add(**proc)
-                for sub in subscriptions:
-                    visit.procedures.add_laser_sub(**sub)
-            else:
-                visit.procedures.add(**proc)
-        return visit
+            self._visits = [create_visit_from_db_model(val) for val in value]
 
     def get_idle_time_pay(self):
         return self.idle_time * 150
