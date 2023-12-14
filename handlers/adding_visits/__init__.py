@@ -1,7 +1,6 @@
 __all__ = [
     "callback",
     "add_visit",
-    "client_name",
     "gross",
     "manual_input",
     "prime_cost",
@@ -10,7 +9,6 @@ __all__ = [
 from . import (
     callback,
     add_visit,
-    client_name,
     gross,
     manual_input,
     prime_cost,

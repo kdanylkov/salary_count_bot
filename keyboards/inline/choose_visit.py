@@ -8,7 +8,7 @@ def choose_visit(workday: Workday):
     pref = "choose_visit"
     return quick_markup(
         {
-            f"{v.client_name} ({v.get_total()})": {
+            f"{v.visit_time} ({v.get_total()})": {
                 "callback_data": dumps({pref: f"{v.db_id}"})
             }
             for v in workday.visits

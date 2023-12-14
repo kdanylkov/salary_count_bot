@@ -1,4 +1,4 @@
-<u><b>Имя клиента</b></u>: {{ visit.client_name }}
+<u><b>Время посещения</b></u>: {{ visit.visit_time }}
 <u><b>Процедуры</b></u>:
     {% for p in visit.procedures -%}
     {{ loop.index }}) {{ p.report() }}

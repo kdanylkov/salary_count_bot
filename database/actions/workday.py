@@ -9,7 +9,7 @@ from utils.dates import range_of_dates
 
 from datetime import datetime
 from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, DeclarativeMeta
 
 from typing import TYPE_CHECKING
 
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from data.objects import Visit, Workday
 
 
-def get_or_create_workday(session, user_id: int, date: datetime):
+def get_or_create_workday(session, user_id: int, date: datetime) -> DeclarativeMeta:
     workday, _ = get_or_create(
         session, WorkDayModel, user_id=user_id, date=date)
 
@@ -26,18 +26,18 @@ def get_or_create_workday(session, user_id: int, date: datetime):
 
 def get_workday_with_visits_from_db(
     user_id: int, date: datetime
-) -> list[dict[tuple, Visit]] | None:
+) -> Workday | None:
     from data.objects import Workday
 
     with Session.begin() as session:
-        workday = get_or_create_workday(session, user_id, date)
+        workday: Workday = get_or_create_workday(session, user_id, date)
 
         stmt = (
             select(VisitModel)
             .options(selectinload(VisitModel.procedures)
                      .selectinload(ProcedureModel.subscriptions))
             .where(VisitModel.workday == workday).
-            order_by(VisitModel.client_name)
+            order_by(VisitModel.visit_time)
         )
 
         db_visits = session.scalars(stmt).all()

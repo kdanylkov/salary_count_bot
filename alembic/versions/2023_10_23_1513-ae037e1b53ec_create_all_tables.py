@@ -34,7 +34,7 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('visits',
-    sa.Column('client_name', sa.String(), nullable=False),
+    sa.Column('visit_time', sa.String(), nullable=False),
     sa.Column('workday_id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),

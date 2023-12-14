@@ -5,6 +5,7 @@ from datetime import datetime
 from loader import bot, calendar_1_callback, calendar, states
 from utils.calendar import get_calendar
 from utils.handler import cancel_action
+from keyboards.inline.proc_time import get_times_makrup
 
 
 @bot.callback_query_handler(
@@ -31,12 +32,12 @@ def date_chosen(call: CallbackQuery):
         else:
             text = f'Ты выбрала дату: {date.strftime("%d.%m.%Y")}'
             bot.send_message(id, text)
-            bot.set_state(id, states.client_name)
+            bot.set_state(id, states.visit_time)
 
             bot.add_data(id, date=date)
 
-            text = "Введи имя клиента"
-            bot.send_message(id, text=text)
+            text = "Выбери время посещения"
+            bot.send_message(id, text=text, reply_markup=get_times_makrup())
 
 
 @bot.message_handler(state=states.choose_date, content_types=["text"])

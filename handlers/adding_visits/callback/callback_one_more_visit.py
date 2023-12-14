@@ -1,3 +1,4 @@
+from keyboards.inline.proc_time import get_times_makrup
 from loader import bot, states, show_date_states
 from data.objects import Workday
 from database.actions.workday import get_workday_with_visits_from_db
@@ -14,8 +15,9 @@ def callback_one_more_visit(call: CallbackQuery):
     bot.delete_message(id, call.message.id)
 
     if call.data.endswith("yes"):
-        bot.set_state(id, states.client_name)
-        bot.send_message(id, "Введи имя клиента:")
+        bot.set_state(id, states.visit_time)
+        text = "Выбери время посещения"
+        bot.send_message(id, text=text, reply_markup=get_times_makrup())
     elif call.data.endswith("cancel"):
         cancel_action(id, bot)
     elif call.data.endswith("overview"):

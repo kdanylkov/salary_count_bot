@@ -34,12 +34,12 @@ def create_visit_with_procedures(data: dict, user_id: int, date: datetime) -> No
         workday = get_or_create_workday(session, user_id, date)
 
         # Extract data from the input dictionary
-        client_name = data["client_name"]
+        visit_time = data["visit_time"]
         laser_conversion_status = data["laser_conversion_status"]
 
         # Create the VisitModel object
         visit = VisitModel(
-            client_name=client_name,
+            visit_time=visit_time,
             workday=workday,
             user_id=user_id,
             laser_conversion_status=laser_conversion_status

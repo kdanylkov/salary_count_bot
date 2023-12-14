@@ -3,7 +3,7 @@ from telebot.handler_backends import State, StatesGroup
 
 class AddVisitStates(StatesGroup):
     choose_date = State()
-    client_name = State()
+    visit_time = State()
     choose_type = State()
     choose_gross = State()
     if_add_another = State()

@@ -24,7 +24,7 @@ def callback_choose_action(call: CallbackQuery):
         bot.send_message(id, text, reply_markup=choose_visit(workday))
         bot.set_state(id, show_date_states.choose_visit)
     elif call.data.endswith("add_another"):
-        bot.set_state(id, states.client_name)
+        bot.set_state(id, states.visit_time)
         bot.send_message(id, "Введи имя клиента:")
     elif call.data.endswith("another_date"):
         bot.set_state(id, show_date_states.choose_date)

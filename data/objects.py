@@ -196,11 +196,11 @@ class ProceduresManager(list):
 class Visit:
     def __init__(self,
                  date: datetime,
-                 client_name: str,
+                 visit_time: str,
                  db_id: int | None = None,
                  laser_conversion_status: str = 'UNKNOWN'):
         self.date = date
-        self.client_name = client_name
+        self.visit_time = visit_time
         self.procedures = ProceduresManager()
         self.db_id = db_id
         self.laser_conversion_status = laser_conversion_status
@@ -214,7 +214,7 @@ class Visit:
     def to_dict(self) -> dict:
         return {
             "date": self.date,
-            "client_name": self.client_name,
+            "visit_time": self.visit_time,
             "laser_conversion_status": self.laser_conversion_status,
             "procedures": [
                 proc.to_dict()
@@ -222,7 +222,7 @@ class Visit:
             ]
         }
 
-    def visit_report(self, ordering: str, pdf=False):
+    def visit_report(self, ordering: str | None = None, pdf=False):
         prefix = "for_pdf/" if pdf else ""
         tmpt = get_template(f"{prefix}visit.j2")
         msg = tmpt.render(visit=self, total=self.get_total(), ordering=ordering)

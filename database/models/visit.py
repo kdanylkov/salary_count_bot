@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 class VisitModel(Base):
     __tablename__ = "visits"
 
-    client_name: Mapped[str]
+    visit_time: Mapped[str]
     workday_id: Mapped[str] = mapped_column(ForeignKey("workdays.id"))
     user_id: Mapped[str] = mapped_column(ForeignKey("users.id"))
 
@@ -30,14 +30,14 @@ class VisitModel(Base):
                                      default='UNKNOWN')
 
     def __str__(self) -> str:
-        return f"Visit of {self.client_name} for {self.workday.date}"
+        return f"Visit of {self.visit_time} for {self.workday.date}"
 
     def __repr__(self) -> str:
         return str(self)
 
     def as_dict(self) -> dict:
         data = {
-            "client_name": self.client_name,
+            "visit_time": self.visit_time,
             "date": self.workday.date,
             "db_id": self.id,
             "laser_conversion_status": self.laser_conversion_status,

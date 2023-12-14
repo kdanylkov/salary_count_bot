@@ -1,5 +1,5 @@
 {% for v in visits -%}
-    {{ loop.index }}) <u>Дата</u>: <b><i>{{ v.date.strftime("%d/%m/%Y") }}</i></b>, <u>время (либо имя) клиента</u>: {{ v.client_name }}. Абонимент {% if v.laser_conversion_status == 'NEW_BOUGHT' %}++++КУПЛЕН++++{% else %}----НЕ КУПЛЕН----.{% endif %}
+    {{ loop.index }}) <u>Дата</u>: <b><i>{{ v.date.strftime("%d/%m/%Y") }}</i></b>, <u>время посещения клиента</u>: {{ v.visit_time }}. Абонимент {% if v.laser_conversion_status == 'NEW_BOUGHT' %}++++КУПЛЕН++++{% else %}----НЕ КУПЛЕН----.{% endif %}
 {% else -%}
     Нет данных о конверсии.
 {% endfor %}
