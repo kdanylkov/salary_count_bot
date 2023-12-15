@@ -4,6 +4,8 @@ from data.objects import Visit
 
 from telebot.types import Message
 
+from utils.visit import change_visit_time
+
 
 @bot.message_handler(
     state=states.enter_custom_time, content_types=["text"], is_valid_time=True
@@ -14,11 +16,15 @@ def custom_time_handler(message: Message):
     time = ':'.join([time[:2], time[2:]])
     bot.send_message(id, f'Ты выбрала время: {time}')
 
-    with bot.retrieve_data(id) as data:
-        data["visit"] = Visit(data["date"], time)
+    visit_to_change_time_id = bot.retrieve_data(id).data.get('visit_to_change_time_id')
+    if visit_to_change_time_id:
+        change_visit_time(bot, id, visit_to_change_time_id, time)
+    else:
+        with bot.retrieve_data(id) as data:
+            data["visit"] = Visit(data["date"], time)
 
-    bot.set_state(id, states.choose_type)
-    bot.send_message(id, "Выбери тип процедуры", reply_markup=types_keyboard())
+        bot.set_state(id, states.choose_type)
+        bot.send_message(id, "Выбери тип процедуры", reply_markup=types_keyboard())
 
 
 @bot.message_handler(

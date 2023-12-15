@@ -5,6 +5,7 @@ from data.objects import Visit
 from telebot.types import CallbackQuery
 
 from utils.handler import cancel_action
+from utils.visit import change_visit_time
 
 
 @bot.callback_query_handler(func=lambda c: c.data.startswith('time'))
@@ -21,8 +22,12 @@ def callback_time_of_procedure(call: CallbackQuery):
     elif cb == 'cancel':
         cancel_action(id, bot)
     else:
-        with bot.retrieve_data(id) as data:
-            data["visit"] = Visit(data["date"], cb)
+        visit_to_change_time_id = bot.retrieve_data(id).data.get('visit_to_change_time_id')
+        if visit_to_change_time_id:
+            change_visit_time(bot, id, visit_to_change_time_id, cb)
+        else:
+            with bot.retrieve_data(id) as data:
+                data["visit"] = Visit(data["date"], cb)
 
-        bot.set_state(id, states.choose_type)
-        bot.send_message(id, "Выбери тип процедуры", reply_markup=types_keyboard())
+            bot.set_state(id, states.choose_type)
+            bot.send_message(id, "Выбери тип процедуры", reply_markup=types_keyboard())

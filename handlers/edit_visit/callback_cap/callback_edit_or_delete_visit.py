@@ -1,3 +1,4 @@
+from keyboards.inline.proc_time import get_times_makrup
 from loader import bot, show_date_states, states
 from data.objects import Visit, Workday
 from keyboards.inline.choose_date_action import choose_action
@@ -30,6 +31,12 @@ def callback_edit_or_delete_visit(call: CallbackQuery):
                              text,
                              reply_markup=choose_action(workday.visits))
             bot.set_state(id, show_date_states.choose_action)
+    elif suffix == 'chg_visit_time':
+        visit_id = bot.retrieve_data(id).data.get('visit').db_id
+        bot.add_data(id, visit_to_change_time_id=visit_id)
+
+        bot.set_state(id, states.visit_time)
+        bot.send_message(id, "Выбери время посещения:", reply_markup=get_times_makrup())
 
     elif suffix in ['chg_proc', 'del_proc']:
         prefix = suffix[:3]

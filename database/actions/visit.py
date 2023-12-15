@@ -127,3 +127,16 @@ def get_visits_new_clients_by_period(user_id: int,
             create_visit_from_db_model(visit) for visit in result.scalars()
         ]
         return visits
+
+
+def change_visit_time_in_db(visit_id: int, new_time_value: str) -> bool:
+
+    with Session.begin() as session:
+        db_visit: VisitModel = session.query(VisitModel).get(visit_id)
+
+        if not db_visit:
+            return False
+
+        db_visit.visit_time = new_time_value
+
+    return True
