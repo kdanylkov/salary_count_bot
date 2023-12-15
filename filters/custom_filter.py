@@ -1,6 +1,8 @@
 from telebot.custom_filters import SimpleCustomFilter
 from telebot.types import Message
 
+import re
+
 
 class IsDigitFilter(SimpleCustomFilter):
     key = "is_positive_digit"
@@ -24,3 +26,14 @@ class IsDigitZeroAndAboveFilter(IsDigitFilter):
             return False
 
         return value >= 0
+
+
+class IsValidTimeFilter(SimpleCustomFilter):
+    key = "is_valid_time"
+
+    def check(self, message: Message) -> bool:
+
+        pattern = r"^(0[9-9]|1[0-9]|2[0-2])([0-5][0-9])$"
+        match = re.match(pattern, message.text)
+        return bool(match)
+
