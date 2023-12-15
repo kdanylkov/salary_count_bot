@@ -18,6 +18,7 @@ class AddVisitStates(StatesGroup):
     sub_gross = State()
     if_laser_new = State()
     if_bought_sub = State()
+    enter_custom_time = State()
 
 
 class ShowDateStates(StatesGroup):

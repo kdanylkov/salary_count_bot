@@ -1,5 +1,6 @@
 from loader import bot, show_date_states, states, calendar_2_callback
 from keyboards.inline.choose_visit import choose_visit
+from keyboards.inline.proc_time import get_times_makrup
 from exceptions.handlers import UnknownCallbackError
 from utils.calendar import get_calendar
 from utils.handler import cancel_action
@@ -25,7 +26,7 @@ def callback_choose_action(call: CallbackQuery):
         bot.set_state(id, show_date_states.choose_visit)
     elif call.data.endswith("add_another"):
         bot.set_state(id, states.visit_time)
-        bot.send_message(id, "Введи имя клиента:")
+        bot.send_message(id, "Выбери время посещения:", reply_markup=get_times_makrup())
     elif call.data.endswith("another_date"):
         bot.set_state(id, show_date_states.choose_date)
         now = datetime.now()
