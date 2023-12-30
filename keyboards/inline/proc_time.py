@@ -11,7 +11,8 @@ def get_times_makrup():
         },
         row_width=4
     )
-    btn_custom_time = InlineKeyboardButton('Своё время', callback_data='time:custom')
+    btn_custom_time = InlineKeyboardButton(
+        'Своё время', callback_data='time:custom')
     btn_cancel = InlineKeyboardButton('Отмена', callback_data='time:cancel')
 
     markup.add(btn_custom_time, btn_cancel)
@@ -20,16 +21,21 @@ def get_times_makrup():
 
 
 def get_proc_times_list():
-    times_unformated = [
-        str(num).replace('5', '3')
-        for num
+    times_unformatted = [
+        str(num) for num
         in range(1000, 2001, 50)
+    ]
+
+    times_unformatted_with_half_hour = [
+        ''.join([time[:2], '3', time[3:]])
+        if time[2] == '5' else time
+        for time in times_unformatted
     ]
 
     times_formatted = [
         ''.join([time[:2], ':', time[2:]])
         for time
-        in times_unformated
+        in times_unformatted_with_half_hour
     ]
 
     return times_formatted
