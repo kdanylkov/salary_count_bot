@@ -9,6 +9,7 @@ class TreatemtTypes(Enum):
     ROLLER_MASSAGE = "Роликовый массаж"
     INJECTIONS = "Инъекцонные процедуры"
     OWN_COSMET = "Косметология (свои материалы)"
+    OWN_INJECTIONS = "Инъекции (свои материалы)"
 
 
 TYPES_LIST = [t.name for t in TreatemtTypes]

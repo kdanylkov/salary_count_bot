@@ -48,7 +48,7 @@ def _proceed_to_next_step_from_type(type: TreatemtTypes, id: str | int):
             state = states.if_first
             bot.send_message(id, "Это первая процедура?",
                              reply_markup=if_first())
-        case "INJECTIONS":
+        case "INJECTIONS" | "OWN_INJECTIONS":
             state = states.prime_cost
             bot.send_message(id, "Введи себестоимость материалов")
         case "LASER":

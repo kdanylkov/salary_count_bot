@@ -120,6 +120,13 @@ class Injections(BaseCosmet):
         return int((self.gross - self.prime_cost) * self.percent)
 
 
+class OwnInjections(Injections):
+
+    @property
+    def earning(self):
+        return super().earning + self.prime_cost
+
+
 class RollerMassage(BaseCosmet):
     def __init__(
         self,
@@ -157,6 +164,7 @@ class ProceduresManager(list):
         "INJECTIONS": Injections,
         "LASER": Laser,
         "OWN_COSMET": OwnCosmet,
+        "OWN_INJECTIONS": OwnInjections,
     }
 
     def add(self, **kwargs):
