@@ -271,7 +271,7 @@ class Workday:
             self._visits = [create_visit_from_db_model(val) for val in value]
 
     def get_idle_time_pay(self):
-        return self.idle_time * 150
+        return self.idle_time * 180
 
     def get_total(self):
         return sum([v.get_total() for v in self.visits]) + self.get_idle_time_pay()
