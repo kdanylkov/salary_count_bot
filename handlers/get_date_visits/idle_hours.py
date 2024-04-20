@@ -8,7 +8,8 @@ from telebot.types import Message
 from datetime import datetime
 
 
-@bot.message_handler(state=show_date_states.idle_hours, is_positive_digit=True)
+@bot.message_handler(state=show_date_states.idle_hours,
+                     is_positive_and_zero_digit=True)
 def idle_hours_handler(message: Message):
     id = message.chat.id
     idle_hours = int(message.text)
@@ -27,4 +28,5 @@ def idle_hours_handler(message: Message):
     text = "<b>ДАННЫЕ ОБНОВЛЕНЫ</b>\n" + text
 
     bot.set_state(id, show_date_states.choose_action)
-    bot.send_message(id, text, reply_markup=choose_action(updated_workday.visits))
+    bot.send_message(id, text, reply_markup=choose_action(
+        updated_workday.visits))
