@@ -30,3 +30,10 @@ def idle_hours_handler(message: Message):
     bot.set_state(id, show_date_states.choose_action)
     bot.send_message(id, text, reply_markup=choose_action(
         updated_workday.visits))
+
+
+@bot.message_handler(state=show_date_states.idle_hours,
+                     is_positive_and_zero_digit=False)
+def idle_hours_incorrect_handler(message: Message):
+    text = ('Введи число, которое больше или равно нулю.')
+    bot.send_message(message.chat.id, text=text)
