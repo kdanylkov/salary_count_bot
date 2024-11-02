@@ -41,13 +41,7 @@ PROCEDURE_PARAMS = [
     "manual_value",
 ]
 
-SQLALCHEMY_URL = URL.create(
-    drivername='postgresql+psycopg2',
-    username=PG_USER,
-    password=PG_PASSWORD,
-    database=PG_DB,
-    host='bot_db',
-).render_as_string(hide_password=False)
+SQLALCHEMY_URL = "sqlite:///./sql_app.db"
 SQLALCHEMY_ECHO = (DB_ECHO == 'True')
 
 LASER_CONVERSION_STATUSES = [
