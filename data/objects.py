@@ -168,7 +168,6 @@ class ProceduresManager(list):
     }
 
     def add(self, **kwargs):
-        print(kwargs)
         info = self._get_procedure_info(kwargs)
         procedure = self.PROCEDURES[info["type"]]
         self.append(procedure(**info))

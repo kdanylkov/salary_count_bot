@@ -31,5 +31,4 @@ def get_users_ids_with_alarm_on():
             select(UserModel).where(UserModel.alarm_on == True)
         )
         ids = [user.id for user in result.scalars()]
-        print(ids)
         return ids

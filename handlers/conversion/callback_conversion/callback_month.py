@@ -16,7 +16,6 @@ def handle_callback_month_choice(call: CallbackQuery):
     first_date, last_date = get_first_and_last_dates(
         int(month), int(year)
     )
-    print(first_date, last_date)
 
     conversion_rate, total_new_clients, new_clients_bought = \
         calculate_conversion_rate(id, first_date, last_date)
